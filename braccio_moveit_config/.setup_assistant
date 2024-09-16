@@ -1,0 +1,10 @@
+moveit_setup_assistant_config:
+  urdf:
+    package: braccio_description
+    relative_path: urdf/braccio.urdf.xacro
+  srdf:
+    relative_path: config/braccio.srdf
+  package_settings:
+    author_name: Jose A Mulet
+    author_email: jmuletal@gmail.com
+    generated_timestamp: 1726478471

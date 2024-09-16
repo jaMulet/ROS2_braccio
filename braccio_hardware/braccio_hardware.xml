@@ -1,0 +1,9 @@
+<library path="braccio_hardware">
+  <class name="braccio_hardware/BraccioHardware"
+         type="braccio_hardware::BraccioHardware"
+         base_class_type="hardware_interface::SystemInterface">
+    <description>
+     Interfacing ROS2 with the Tinker Braccio (Arduino)
+     </description>
+  </class>
+</library>

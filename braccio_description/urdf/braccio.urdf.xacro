@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+
+<!-- top level -->
+<robot name="braccio" xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+    <!-- include the braccio macro -->
+    <xacro:include filename="$(find braccio_description)/urdf/braccio_description.urdf.xacro" />
+
+    <xacro:arg name="robot_name" default="braccio" />
+    <xacro:arg name="base_frame" default="world" />
+    <xacro:arg name="sim" default="true" />
+    <xacro:arg name="hw_test" default="false" />
+
+    <!-- fix to base_frame -->
+    <link name="$(arg base_frame)" />
+
+    <!-- braccio -->
+    <xacro:braccio base_frame="$(arg base_frame)" robot_name="$(arg robot_name)" sim="$(arg sim)" hw_test="$(arg hw_test)" />
+</robot>

@@ -1,0 +1,79 @@
+controller_manager:
+  ros__parameters:
+    update_rate: 100
+
+    joint_state_broadcaster:
+      type: joint_state_broadcaster/JointStateBroadcaster
+
+    position_trajectory_controller:
+      type: joint_trajectory_controller/JointTrajectoryController
+
+    gripper_controller:
+      type: joint_trajectory_controller/JointTrajectoryController
+
+    #gripper_controller:
+    #  type: position_controllers/GripperActionController
+
+position_trajectory_controller:
+  ros__parameters:
+    joints:
+      - joint_base
+      - joint_1
+      - joint_2
+      - joint_3
+      - joint_4
+    #gains:
+    #  joint_base:
+    #    p: 0.1
+    #    i: 0.0
+    #    d: 1.0
+    #  joint_1:
+    #    p: 0.1
+    #    i: 0.0
+    #    d: 0.1
+    #  joint2:
+    #    p: 0.1
+    #    i: 0.0
+    #    d: 1.0
+    #  joint_2:
+    #    p: 0.1
+    #    i: 0.0
+    #    d: 1.0
+    #  joint_3:
+    #    p: 0.1
+    #    i: 0.0
+    #    d: 1.0
+    #  joint_4:
+    #    p: 0.1
+    #    i: 0.0
+    #    d: 1.0
+    command_interfaces:
+      - position
+    state_interfaces:
+      - position
+      - velocity
+    state_publish_rate: 50.0
+    action_monitor_rate: 20.0
+
+gripper_controller:
+  ros__parameters:
+    #action_monitor_rate: 20.0
+    #allow_stalling: false
+    #goal_tolerance: 0.01
+    #max_effort: 0.0
+    #stall_timeout: 1.0
+    #stall_velocity_threshold: 0.001
+    
+    #interface_name: position
+    joints:
+      - right_gripper_joint   
+    gains:
+      gripper_joint:
+        p: 0.1
+        i: 0.0
+        d: 1.0
+    command_interfaces:
+      - position
+    state_interfaces:
+      - position
+      - velocity

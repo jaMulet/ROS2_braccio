@@ -1,0 +1,572 @@
+<?xml version="1.0"?>
+
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+    <!-- some constants -->
+    <xacro:property name="PI" value="3.1415926535897931" />
+
+    <xacro:property name="joint_base_position_lower_limit" value="0.0" />
+    <xacro:property name="joint_base_position_upper_limit" value="3.1416" />
+    <xacro:property name="joint_1_position_lower_limit" value="0.400" />
+    <xacro:property name="joint_1_position_upper_limit" value="2.700" />
+    <xacro:property name="joint_2_position_lower_limit" value="0.000" />
+    <xacro:property name="joint_2_position_upper_limit" value="3.1416" />
+    <xacro:property name="joint_3_position_lower_limit" value="0.000" />
+    <xacro:property name="joint_3_position_upper_limit" value="3.1416" />
+    <xacro:property name="joint_4_position_lower_limit" value="0.000" />
+    <xacro:property name="joint_4_position_upper_limit" value="3.1416" />
+    <xacro:property name="right_gripper_joint_aux_position_lower_limit" value="0.1745" />
+    <xacro:property name="right_gripper_joint_aux_position_upper_limit" value="1.2741" />
+    <xacro:property name="right_gripper_joint_aux2_position_lower_limit" value="0.1" />
+    <xacro:property name="right_gripper_joint_aux2_position_upper_limit" value="1.6" />
+    <xacro:property name="right_gripper_joint_position_lower_limit" value="0.05" />
+    <xacro:property name="right_gripper_joint_position_upper_limit" value="0.66" />
+    <xacro:property name="left_gripper_joint_aux_position_lower_limit" value="0.1745" />
+    <xacro:property name="left_gripper_joint_aux_position_upper_limit" value="1.2741" />
+    <xacro:property name="left_gripper_joint_aux2_position_lower_limit" value="0.1" />
+    <xacro:property name="left_gripper_joint_aux2_position_upper_limit" value="1.6" />
+    <xacro:property name="left_gripper_joint_position_lower_limit" value="0.05" />
+    <xacro:property name="left_gripper_joint_position_upper_limit" value="0.66" />
+
+    <xacro:property name="effort_limit" value="1000.0" />
+    <xacro:property name="velocity_limit" value="1.00" />
+    <xacro:property name="joint_damping" value="0.50" />
+    <xacro:property name="joint_friction" value="0.10" />
+
+    <!-- includes -->
+    <xacro:include filename="$(find braccio_description)/urdf/materials.urdf.xacro" />
+    <xacro:include filename="$(find braccio_description)/gazebo/braccio.gazebo.xacro" />
+    <xacro:include filename="$(find braccio_description)/ros2_control/braccio.ros2_control.xacro" />
+
+    <xacro:macro name="braccio" params="base_frame:=^|world robot_name:=^|braccio sim:=^|true hw_test:=^|false">
+
+        <link name="base_link">
+            <inertial>
+                <origin rpy="0 0 0" xyz="0 0 0" />
+                <mass value="0.250" />
+                <inertia ixx="0.017901" ixy="0.000000" ixz="0.000771" iyy="0.022356" iyz="-0.000000" izz="0.021346" />
+            </inertial>
+            <visual>
+                <origin rpy="0 0 0" xyz="0 0 0" />
+                <geometry>
+                    <mesh filename="package://braccio_description/meshes/visual/base_link.stl" scale="0.001 0.001 0.001" />
+                </geometry>
+                <material name="orange" />
+            </visual>
+            <collision>
+                <origin rpy="0 0 0" xyz="0 0 0" />
+                <geometry>
+                    <mesh filename="package://braccio_description/meshes/collision/base_link.stl" scale="0.001 0.001 0.001" />
+                </geometry>
+            </collision>
+        </link>
+
+        <link name="link_1">
+            <inertial>
+                <origin rpy="0 0 0" xyz="0 0 0" />
+                <mass value="0.250" />
+                <inertia ixx="0.017901" ixy="0.000000" ixz="0.000771" iyy="0.022356" iyz="-0.000000" izz="0.021346" />
+            </inertial>
+            <visual>
+                <origin rpy="0 0 0" xyz="0 0 0" />
+                <geometry>
+                    <mesh filename="package://braccio_description/meshes/visual/link_1.stl" scale="0.001 0.001 0.001" />
+                </geometry>
+                <material name="orange" />
+            </visual>
+            <collision>
+                <origin rpy="0 0 0" xyz="0 0 0" />
+                <geometry>
+                    <mesh filename="package://braccio_description/meshes/collision/link_1.stl" scale="0.001 0.001 0.001" />
+                </geometry>
+            </collision>
+        </link>
+
+        <link name="link_2">
+            <inertial>
+                <origin rpy="0 0 0" xyz="0 0 0" />
+                <mass value="0.250" />
+                <inertia ixx="0.017901" ixy="0.000000" ixz="0.000771" iyy="0.022356" iyz="-0.000000" izz="0.021346" />
+            </inertial>
+            <visual>
+                <origin rpy="0 0 0" xyz="0 0 0" />
+                <geometry>
+                    <mesh filename="package://braccio_description/meshes/visual/link_2.stl" scale="0.001 0.001 0.001" />
+                </geometry>
+                <material name="orange" />
+            </visual>
+            <collision>
+                <origin rpy="0 0 0" xyz="-0.0045 0.0055 -0.026" />
+                <geometry>
+                    <mesh filename="package://braccio_description/meshes/collision/link_2.stl" scale="0.001 0.001 0.001" />
+                </geometry>
+            </collision>
+        </link>
+
+        <link name="link_3">
+            <inertial>
+                <origin rpy="0 0 0" xyz="0 0 0" />
+                <mass value="0.250" />
+                <inertia ixx="0.017901" ixy="0.000000" ixz="0.000771" iyy="0.022356" iyz="-0.000000" izz="0.021346" />
+            </inertial>
+            <visual>
+                <origin rpy="0 0 0" xyz="0 0 0" />
+                <geometry>
+                    <mesh filename="package://braccio_description/meshes/visual/link_3.stl" scale="0.001 0.001 0.001" />
+                </geometry>
+                <material name="orange" />
+            </visual>
+            <collision>
+                <origin rpy="0 0 0" xyz="0 0 0" />
+                <geometry>
+                    <mesh filename="package://braccio_description/meshes/collision/link_3.stl" scale="0.001 0.001 0.001" />
+                </geometry>
+            </collision>
+        </link>
+
+        <link name="link_4">
+            <inertial>
+                <origin rpy="0 0 0" xyz="0 0 0" />
+                <mass value="0.250" />
+                <inertia ixx="0.017901" ixy="0.000000" ixz="0.000771" iyy="0.022356" iyz="-0.000000" izz="0.021346" />
+            </inertial>
+            <visual>
+                <origin rpy="0 0 0" xyz="0 0 0" />
+                <geometry>
+                    <mesh filename="package://braccio_description/meshes/visual/link_4.stl" scale="0.001 0.001 0.001" />
+                </geometry>
+                <material name="orange" />
+            </visual>
+            <collision>
+                <origin rpy="0 0 0" xyz="0 0 0" />
+                <geometry>
+                    <mesh filename="package://braccio_description/meshes/collision/link_4.stl" scale="0.001 0.001 0.001" />
+                </geometry>
+            </collision>
+        </link>
+
+        <link name="link_5">
+            <inertial>
+                <origin rpy="0 0 0" xyz="0 0 0" />
+                <mass value="0.250" />
+                <inertia ixx="0.017901" ixy="0.000000" ixz="0.000771" iyy="0.022356" iyz="-0.000000" izz="0.021346" />
+            </inertial>
+            <visual>
+                <origin rpy="0 0 0" xyz="0 0 0" />
+                <geometry>
+                    <mesh filename="package://braccio_description/meshes/visual/link_5.stl" scale="0.001 0.001 0.001" />
+                </geometry>
+                <material name="white" />
+            </visual>
+            <collision>
+                <origin rpy="0 0 0" xyz="0 0 0" />
+                <geometry>
+                    <mesh filename="package://braccio_description/meshes/collision/link_5.stl" scale="0.001 0.001 0.001" />
+                </geometry>
+            </collision>
+        </link>
+
+        <link name="right_gripper_link">
+            <inertial>
+                <origin rpy="0 0 0" xyz="0 0 0" />
+                <mass value="0.050" />
+                <inertia ixx="0.017901" ixy="0.000000" ixz="0.000771" iyy="0.022356" iyz="-0.000000" izz="0.021346" />
+            </inertial>
+            <visual>
+                <origin rpy="0 0 0" xyz="0 0 0" />
+                <geometry>
+                    <mesh filename="package://braccio_description/meshes/visual/finger.stl" scale="0.001 0.001 0.001" />
+                </geometry>
+                <material name="white" />
+            </visual>
+            <collision>
+                <origin rpy="0 0 0" xyz="0 0 0" />
+                <geometry>
+                    <mesh filename="package://braccio_description/meshes/collision/finger_collision.stl" scale="0.001 0.001 0.001" />
+                </geometry>
+            </collision>
+        </link>
+
+        <link name="right_gripper_link_aux1">
+            <inertial>
+                <origin rpy="0 0 0" xyz="0 0 0" />
+                <mass value="0.050" />
+                <inertia ixx="0.017901" ixy="0.000000" ixz="0.000771" iyy="0.022356" iyz="-0.000000" izz="0.021346" />
+            </inertial>
+            <visual>
+                <origin rpy="0 0 0" xyz="0 0 0" />
+                <geometry>
+                    <mesh filename="package://braccio_description/meshes/visual/finger_aux.stl" scale="0.001 0.001 0.001" />
+                </geometry>
+                <material name="white" />
+            </visual>
+            <collision>
+                <origin rpy="0 0 0" xyz="0 0 0" />
+                <geometry>
+                    <mesh filename="package://braccio_description/meshes/collision/finger_aux.stl" scale="0.001 0.001 0.001" />
+                </geometry>
+            </collision>
+        </link>
+
+        <link name="right_gripper_link_aux2">
+            <inertial>
+                <origin rpy="0 0 0" xyz="0 0 0" />
+                <mass value="0.050" />
+                <inertia ixx="0.017901" ixy="0.000000" ixz="0.000771" iyy="0.022356" iyz="-0.000000" izz="0.021346" />
+            </inertial>
+            <visual>
+                <origin rpy="0 0 0" xyz="0 0 0" />
+                <geometry>
+                    <mesh filename="package://braccio_description/meshes/visual/finger_aux.stl" scale="0.001 0.001 0.001" />
+                </geometry>
+                <material name="white" />
+            </visual>
+            <collision>
+                <origin rpy="0 0 0" xyz="0 0 0" />
+                <geometry>
+                    <mesh filename="package://braccio_description/meshes/collision/finger_aux.stl" scale="0.001 0.001 0.001" />
+                </geometry>
+            </collision>
+        </link>
+
+        <link name="right_gripper_link_aux3">
+            <inertial>
+                <origin rpy="0 0 0" xyz="0 0 0" />
+                <mass value="0.050" />
+                <inertia ixx="0.017901" ixy="0.000000" ixz="0.000771" iyy="0.022356" iyz="-0.000000" izz="0.021346" />
+            </inertial>
+            <visual>
+                <origin rpy="0 0 0" xyz="0 0 0" />
+                <geometry>
+                    <mesh filename="package://braccio_description/meshes/visual/finger_aux.stl" scale="0.001 0.001 0.001" />
+                </geometry>
+                <material name="white" />
+            </visual>
+            <collision>
+                <origin rpy="0 0 0" xyz="0 0 0" />
+                <geometry>
+                    <mesh filename="package://braccio_description/meshes/collision/finger_aux.stl" scale="0.001 0.001 0.001" />
+                </geometry>
+            </collision>
+        </link>
+
+        <link name="right_gripper_link_aux4">
+            <inertial>
+                <origin rpy="0 0 0" xyz="0 0 0" />
+                <mass value="0.050" />
+                <inertia ixx="0.017901" ixy="0.000000" ixz="0.000771" iyy="0.022356" iyz="-0.000000" izz="0.021346" />
+            </inertial>
+            <visual>
+                <origin rpy="0 0 0" xyz="0 0 0" />
+                <geometry>
+                    <mesh filename="package://braccio_description/meshes/visual/finger_aux.stl" scale="0.001 0.001 0.001" />
+                </geometry>
+                <material name="white" />
+            </visual>
+            <collision>
+                <origin rpy="0 0 0" xyz="0 0 0" />
+                <geometry>
+                    <mesh filename="package://braccio_description/meshes/collision/finger_aux.stl" scale="0.001 0.001 0.001" />
+                </geometry>
+            </collision>
+        </link>
+
+        <link name="left_gripper_link">
+            <inertial>
+                <origin rpy="0 0 0" xyz="0 0 0" />
+                <mass value="0.050" />
+                <inertia ixx="0.017901" ixy="0.000000" ixz="0.000771" iyy="0.022356" iyz="-0.000000" izz="0.021346" />
+            </inertial>
+            <visual>
+                <origin rpy="0 0 0" xyz="0 0 0" />
+                <geometry>
+                    <mesh filename="package://braccio_description/meshes/visual/finger.stl" scale="0.001 0.001 0.001" />
+                </geometry>
+                <material name="white" />
+            </visual>
+            <collision>
+                <origin rpy="0 0 0" xyz="0 0 0" />
+                <geometry>
+                    <mesh filename="package://braccio_description/meshes/collision/finger_collision.stl" scale="0.001 0.001 0.001" />
+                </geometry>
+            </collision>
+        </link>
+
+        <link name="left_gripper_link_aux1">
+            <inertial>
+                <origin rpy="0 0 0" xyz="0 0 0" />
+                <mass value="0.050" />
+                <inertia ixx="0.017901" ixy="0.000000" ixz="0.000771" iyy="0.022356" iyz="-0.000000" izz="0.021346" />
+            </inertial>
+            <visual>
+                <origin rpy="0 0 0" xyz="0 0 0" />
+                <geometry>
+                    <mesh filename="package://braccio_description/meshes/visual/finger_aux.stl" scale="0.001 0.001 0.001" />
+                </geometry>
+                <material name="white" />
+            </visual>
+            <collision>
+                <origin rpy="0 0 0" xyz="0 0 0" />
+                <geometry>
+                    <mesh filename="package://braccio_description/meshes/collision/finger_aux.stl" scale="0.001 0.001 0.001" />
+                </geometry>
+            </collision>
+        </link>
+
+        <link name="left_gripper_link_aux2">
+            <inertial>
+                <origin rpy="0 0 0" xyz="0 0 0" />
+                <mass value="0.050" />
+                <inertia ixx="0.017901" ixy="0.000000" ixz="0.000771" iyy="0.022356" iyz="-0.000000" izz="0.021346" />
+            </inertial>
+            <visual>
+                <origin rpy="0 0 0" xyz="0 0 0" />
+                <geometry>
+                    <mesh filename="package://braccio_description/meshes/visual/finger_aux.stl" scale="0.001 0.001 0.001" />
+                </geometry>
+                <material name="white" />
+            </visual>
+            <collision>
+                <origin rpy="0 0 0" xyz="0 0 0" />
+                <geometry>
+                    <mesh filename="package://braccio_description/meshes/collision/finger_aux.stl" scale="0.001 0.001 0.001" />
+                </geometry>
+            </collision>
+        </link>
+
+        <link name="left_gripper_link_aux3">
+            <inertial>
+                <origin rpy="0 0 0" xyz="0 0 0" />
+                <mass value="0.050" />
+                <inertia ixx="0.017901" ixy="0.000000" ixz="0.000771" iyy="0.022356" iyz="-0.000000" izz="0.021346" />
+            </inertial>
+            <visual>
+                <origin rpy="0 0 0" xyz="0 0 0" />
+                <geometry>
+                    <mesh filename="package://braccio_description/meshes/visual/finger_aux.stl" scale="0.001 0.001 0.001" />
+                </geometry>
+                <material name="white" />
+            </visual>
+            <collision>
+                <origin rpy="0 0 0" xyz="0 0 0" />
+                <geometry>
+                    <mesh filename="package://braccio_description/meshes/collision/finger_aux.stl" scale="0.001 0.001 0.001" />
+                </geometry>
+            </collision>
+        </link>
+
+        <link name="left_gripper_link_aux4">
+            <inertial>
+                <origin rpy="0 0 0" xyz="0 0 0" />
+                <mass value="0.050" />
+                <inertia ixx="0.017901" ixy="0.000000" ixz="0.000771" iyy="0.022356" iyz="-0.000000" izz="0.021346" />
+            </inertial>
+            <visual>
+                <origin rpy="0 0 0" xyz="0 0 0" />
+                <geometry>
+                    <mesh filename="package://braccio_description/meshes/visual/finger_aux.stl" scale="0.001 0.001 0.001" />
+                </geometry>
+                <material name="white" />
+            </visual>
+            <collision>
+                <origin rpy="0 0 0" xyz="0 0 0" />
+                <geometry>
+                    <mesh filename="package://braccio_description/meshes/collision/finger_aux.stl" scale="0.001 0.001 0.001" />
+                </geometry>
+            </collision>
+        </link>
+
+        <joint name="${base_frame}_joint" type="fixed">
+            <parent link="${base_frame}" />
+            <child link="base_link" />
+        </joint>
+
+        <joint name="joint_base" type="revolute">
+            <origin rpy="0 0 0"
+                    xyz="0 0 0.004" />
+            <parent link="base_link" />
+            <child link="link_1" />
+            <axis xyz="0 0 1" />
+            <limit effort="${effort_limit}" lower="${joint_base_position_lower_limit}" upper="${joint_base_position_upper_limit}" velocity="${velocity_limit}" />
+            <dynamics damping="${joint_damping}" friction="${joint_friction}" />
+        </joint>
+
+        <joint name="joint_1" type="revolute">
+            <origin rpy="1.5708 0 0"
+                    xyz="0 0.000 0.064" />
+            <parent link="link_1" />
+            <child link="link_2" />
+            <axis xyz="0 0 1" />
+            <limit effort="${effort_limit}" lower="${joint_1_position_lower_limit}" upper="${joint_1_position_upper_limit}" velocity="${velocity_limit}" />
+            <dynamics damping="${joint_damping}" friction="${joint_friction}" />
+        </joint>
+
+        <joint name="joint_2" type="revolute">
+            <origin rpy="0 0 -1.5708"
+                    xyz="0.125 0.000 0.000" />
+            <parent link="link_2" />
+            <child link="link_3" />
+            <axis xyz="0 0 1" />
+            <limit effort="${effort_limit}" lower="${joint_2_position_lower_limit}" upper="${joint_2_position_upper_limit}" velocity="${velocity_limit}" />
+            <dynamics damping="${joint_damping}" friction="${joint_friction}" />
+        </joint>
+
+        <joint name="joint_3" type="revolute">
+            <origin rpy="0 0 -1.5708"
+                    xyz="0.1165 0.000 0.000" />
+            <parent link="link_3" />
+            <child link="link_4" />
+            <axis xyz="0 0 1" />
+            <limit effort="${effort_limit}" lower="${joint_3_position_lower_limit}" upper="${joint_3_position_upper_limit}" velocity="${velocity_limit}" />
+            <dynamics damping="${joint_damping}" friction="${joint_friction}" />
+        </joint>
+
+        <joint name="joint_4" type="revolute">
+            <origin rpy="1.5708 0 01.5708"
+                    xyz="0.061 0.000 0.000" />
+            <parent link="link_4" />
+            <child link="link_5" />
+            <axis xyz="0 0 1" />
+            <limit effort="${effort_limit}" lower="${joint_4_position_lower_limit}" upper="${joint_4_position_upper_limit}" velocity="${velocity_limit}" />
+            <dynamics damping="${joint_damping}" friction="${joint_friction}" />
+        </joint>
+
+        <joint name="right_gripper_joint" type="revolute">
+            <origin rpy="1.5708 1.19 0"
+                    xyz="0.0095 -0.008 0.035" />
+            <parent link="link_5" />
+            <child link="right_gripper_link_aux1" />
+            <axis xyz="0 0 1" />
+            <limit effort="${effort_limit}" lower="${right_gripper_joint_aux_position_lower_limit}" upper="${right_gripper_joint_aux_position_upper_limit}" velocity="${velocity_limit}" />
+            <dynamics damping="${joint_damping}" friction="${joint_friction}" />
+        </joint>
+
+        <joint name="right_gripper_joint2" type="revolute">
+            <mimic joint="right_gripper_joint" multiplier="1.22" offset="0"/>
+            <origin rpy="1.5708 1.59 0"
+                    xyz="0.0295 -0.008 0.035" />
+            <parent link="link_5" />
+            <child link="right_gripper_link_aux2" />
+            <axis xyz="0 0 1" />
+            <limit effort="${effort_limit}" lower="${right_gripper_joint_aux2_position_lower_limit}" upper="${right_gripper_joint_aux2_position_upper_limit}" velocity="${velocity_limit}" />
+            <dynamics damping="${joint_damping}" friction="${joint_friction}" />
+        </joint>
+
+        <joint name="right_gripper_joint3" type="fixed">
+            <origin rpy="0 0 0"
+                    xyz="0 0 -0.010" />
+            <parent link="right_gripper_link_aux1" />
+            <child link="right_gripper_link_aux3" />
+        </joint>
+
+        <joint name="right_gripper_joint4" type="fixed">
+            <origin rpy="0 0 0"
+                    xyz="0 0 -0.010" />
+            <parent link="right_gripper_link_aux2" />
+            <child link="right_gripper_link_aux4" />
+        </joint>
+
+        <joint name="right_gripper_joint5" type="revolute">
+            <mimic joint="right_gripper_joint" multiplier="0.405" offset="0"/>
+            <origin rpy="-1.5708 2.05 0"
+                    xyz="-0.018 -0.005 -0.012" />
+            <parent link="link_5" />
+            <child link="right_gripper_link" />
+            <axis xyz="0 0 -1" />
+            <limit effort="${effort_limit}" lower="${right_gripper_joint_position_lower_limit}" upper="${right_gripper_joint_position_upper_limit}" velocity="${velocity_limit}"/>
+            <dynamics damping="${joint_damping}" friction="${joint_friction}" />
+        </joint>
+
+        <joint name="left_gripper_joint" type="revolute">
+            <mimic joint="right_gripper_joint" multiplier="1" offset="0"/>
+            <origin rpy="1.5708 -1.15 0"
+                    xyz="-0.0095 -0.008 0.035" />
+            <parent link="link_5" />
+            <child link="left_gripper_link_aux1" />
+            <axis xyz="0 0 -1" />
+            <limit effort="${effort_limit}" lower="${left_gripper_joint_aux_position_lower_limit}" upper="${left_gripper_joint_aux_position_upper_limit}" velocity="${velocity_limit}" />
+            <dynamics damping="${joint_damping}" friction="${joint_friction}" />
+        </joint>
+
+        <joint name="left_gripper_joint2" type="revolute">
+            <mimic joint="right_gripper_joint" multiplier="1.22" offset="0"/>
+            <origin rpy="1.5708 -1.55 0"
+                    xyz="-0.0295 -0.008 0.035" />
+            <parent link="link_5" />
+            <child link="left_gripper_link_aux2" />
+            <axis xyz="0 0 -1" />
+            <limit effort="${effort_limit}" lower="${left_gripper_joint_aux2_position_lower_limit}" upper="${left_gripper_joint_aux2_position_upper_limit}" velocity="${velocity_limit}" />
+            <dynamics damping="${joint_damping}" friction="${joint_friction}" />
+        </joint>
+
+        <joint name="left_gripper_joint3" type="fixed">
+            <origin rpy="0 0 0"
+                    xyz="0 0 -0.010" />
+            <parent link="left_gripper_link_aux1" />
+            <child link="left_gripper_link_aux3" />
+        </joint>
+
+        <joint name="left_gripper_joint4" type="fixed">
+            <origin rpy="0 0 0"
+                    xyz="0 0 -0.010" />
+            <parent link="left_gripper_link_aux2" />
+            <child link="left_gripper_link_aux4" />
+        </joint>
+
+        <joint name="left_gripper_joint5" type="revolute">
+            <mimic joint="right_gripper_joint" multiplier="0.405" offset="0"/>
+            <origin rpy="1.5708 1.10 0"
+                    xyz="0.018 -0.005 -0.012" />
+            <parent link="link_5" />
+            <child link="left_gripper_link"/>
+            <axis xyz="0 0 -1" />
+            <limit effort="${effort_limit}" lower="${left_gripper_joint_position_lower_limit}" upper="${left_gripper_joint_position_upper_limit}" velocity="${velocity_limit}" />
+            <dynamics damping="${joint_damping}" friction="${joint_friction}" />
+        </joint>
+
+        <link name="random"/>
+        <link name="random1"/>
+        <link name="random2"/>
+        <link name="random3"/>
+        <link name="random4"/>
+
+        <joint name="right_gripper_joint2_mimic" type="fixed">
+            <parent link="world" />
+            <child link="random" />
+        </joint>
+        <joint name="right_gripper_joint5_mimic" type="fixed">
+            <parent link="world" />
+            <child link="random1" />
+        </joint>
+        <joint name="left_gripper_joint_mimic" type="fixed">
+            <parent link="world" />
+            <child link="random2" />
+        </joint>
+        <joint name="left_gripper_joint2_mimic" type="fixed">
+            <parent link="world" />
+            <child link="random3" />
+        </joint>
+        <joint name="left_gripper_joint5_mimic" type="fixed">
+            <parent link="world" />
+            <child link="random4" />
+        </joint>
+
+        <xacro:braccio_gazebo robot_name="${robot_name}" />
+
+        <xacro:braccio_hardware_interface
+            sim="${sim}"
+            hw_test="${hw_test}"
+            joint_base_position_lower_limit="${joint_base_position_lower_limit}"
+            joint_base_position_upper_limit="${joint_base_position_upper_limit}"
+            joint_1_position_lower_limit="${joint_1_position_lower_limit}"
+            joint_1_position_upper_limit="${joint_1_position_upper_limit}"
+            joint_2_position_lower_limit="${joint_2_position_lower_limit}"
+            joint_2_position_upper_limit="${joint_2_position_upper_limit}"
+            joint_3_position_lower_limit="${joint_3_position_lower_limit}"
+            joint_3_position_upper_limit="${joint_3_position_upper_limit}"
+            joint_4_position_lower_limit="${joint_4_position_lower_limit}"
+            joint_4_position_upper_limit="${joint_4_position_upper_limit}"
+            right_gripper_joint_position_lower_limit="${right_gripper_joint_position_lower_limit}"
+            right_gripper_joint_position_upper_limit="${right_gripper_joint_position_upper_limit}"/>
+    </xacro:macro>
+</robot>
