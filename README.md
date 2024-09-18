@@ -1,10 +1,10 @@
-# The ROS2 stack for the Tinkerkit Braccio robot
+# ROS2 stack for the Tinkerkit Braccio robot
 
 ## Overview
 
 This repository contains the launch and configuration setups to get started with the [Tinkerkit Braccio][1] robot using ROS2, Gazebo and the driver to control the real robot. The Braccio is a fully operational robotic arm, featured with 5 servomotors plus one additional servomotor to control the gripper, and controller via an Arduino. Even its simplicity and low cost, it represents a perfect base to get use to ROS2 and to control a real robot arm, while testing new robot functionalities (ros_control, vision systems, etc).
 
-The repository consists of following packages:
+The repository consists of following packages and folders:
 
 * *braccio bringup*. Main launch and bringup files.
 * *braccio_description*. Robot decription and URDF files.
@@ -70,7 +70,7 @@ Simulates the Braccio robot using Gazebo Classic and launches RViz to control it
 
 Communicates with the Braccio robot via serial communication and launches RViz to control it.
 
-     ros2 launch braccio_bringup bringup.launch.py sim:=true
+     ros2 launch braccio_bringup bringup.launch.py sim:=false
 
 ### Testing communications
 
